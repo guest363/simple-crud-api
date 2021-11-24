@@ -3,11 +3,14 @@
     "cypress": "^9.1.0",
     "eslint": "^8.3.0",
     "nodemon": "^2.0.15",
-    "webpack": "^5.64.2",
-    "webpack-cli": "^4.9.1"
+    "webpack": "^5.64.2"
   },
   "dependencies": {
     "dotenv": "^10.0.0"
+  },
+  "scripts": {
+    "start:dev": "nodemon ./src/index.js",
+    "start:prod": "webpack --config ./config/webpack.prod.js && node ./build/bundle.js"
   },
   "type": "module"
 }

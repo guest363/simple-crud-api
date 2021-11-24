@@ -10,9 +10,14 @@ export default {
   output: {
     path: path.resolve(__dirname, "build"),
     charset: true,
+    module: true,
     filename: "bundle.js",
   },
+  target: 'node16.13',
   mode: "production",
+  experiments: {
+    outputModule: true,
+  },
   resolve: {
     extensions: [".js"],
     fallback: {

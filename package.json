@@ -6,7 +6,8 @@
     "webpack": "^5.64.2"
   },
   "dependencies": {
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start:dev": "nodemon ./src/index.js",

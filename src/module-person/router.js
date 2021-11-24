@@ -1,4 +1,6 @@
 import http from "http";
+import { get } from "./api/get.js";
+import { post } from "./api/post.js";
 import { dbSelector } from "./db/db-selector.js";
 
 const personDb = dbSelector("in-memory");
@@ -6,9 +8,9 @@ const personDb = dbSelector("in-memory");
 export const router = (req, res) => {
   switch (req.method) {
     case "GET":
-      break;
+      return get( req, res, personDb );
     case "POST":
-      break;
+      return post( req, res, personDb );
     case "PUT":
       break;
     case "DELETE":

@@ -22,7 +22,6 @@ export const router = (req, res) => {
           data: `This method is not allow. ${http.STATUS_CODES[404]}`,
         })
       );
-      req.connection.destroy();
       break;
   }
 };

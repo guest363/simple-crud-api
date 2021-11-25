@@ -6,8 +6,38 @@ import { router } from "./module-person/router.js";
  */
 dotenv.config();
 
-http.createServer(router).listen(process.env.APP_PORT, "127.0.0.1", () => {
-  console.log(
-    `Сервер начал прослушивание запросов на порту ${process.env.APP_PORT}`
-  );
-});
+/**
+ * /persons                  false
+ * /person                   true
+ * /person/                  false
+ * /person/ASSD              true
+ * /person/ASSD/ssdad        false
+ * /person/ASSD/person/2swad false
+ */
+const personUrlReqExp = /^\/(person$)|((?<=^\/person\/)\w+$)/;
+http
+  .createServer((req, res) => {
+    switch (true) {
+      /**
+       * Все роуты начинающиеся на /person
+       * передаются в ротуер person и он уже
+       * их маршрутизирует
+       */
+      case personUrlReqExp.test(req.url):
+        router(req, res);
+        break;
+
+      default:
+        res.writeHead(404, { "Content-Type": "text/plain" }).end(
+          JSON.stringify({
+            data: `This route dose not exist - ${req.url}`,
+          })
+        );
+        break;
+    }
+  })
+  .listen(process.env.APP_PORT, "127.0.0.1", () => {
+    console.log(
+      `Сервер начал прослушивание запросов на порту ${process.env.APP_PORT}`
+    );
+  });

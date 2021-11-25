@@ -1,20 +1,14 @@
 import dotenv from "dotenv";
 import http from "http";
 import { router } from "./module-person/router.js";
+import { personUrlReqExp } from "./variables.js";
 /**
  * Подгрудаем переменные окружения из файла .env
  */
 dotenv.config();
 
-/**
- * /persons                  false
- * /person                   true
- * /person/                  false
- * /person/ASSD              true
- * /person/ASSD/ssdad        false
- * /person/ASSD/person/2swad false
- */
-const personUrlReqExp = /^\/(person$)|((?<=^\/person\/)\w+$)/;
+
+
 http
   .createServer((req, res) => {
     switch (true) {

@@ -14,12 +14,12 @@ export const get = (req, res, db) => {
   if (!isGetAll) {
     if (!isUUID.test(searcheResult[0])) {
       return res
-        .writeHead(400, { "Content-Type": "application/json" })
+        .writeHead(400, { "Content-Type": "text/plain" })
         .end("Invalid uuid");
     }
     if (!responsValue) {
       return res
-        .writeHead(404, { "Content-Type": "application/json" })
+        .writeHead(404, { "Content-Type": "text/plain" })
         .end("User not found");
     }
   }

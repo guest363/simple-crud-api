@@ -21,6 +21,14 @@ const requireFields = [
  *
  * Возвращает распарсенные данные и ошибку
  *
+ * В задании не совсем ясно, что делать если есть лишниее поля
+ * я решил просто их игнорировать, не бросать ошибку
+ *
+ * И по этой причине
+ * {"name": "Oleg", "age": 12, "hobbies": ["sd"], "ds": 12}
+ * Станет
+ * {"id":"0fabff81-3cad-42f7-8da0-4080217be27a","name":"Oleg","age":12,"hobbies":["sd"]}
+ *
  * @param {*} res http.response
  * @param {*} req http.request
  * @param {*} body JSON in string
@@ -28,25 +36,22 @@ const requireFields = [
  */
 export const validatePost = (req, res, body) => {
   let parsedData = {};
+  let unChekedData = {};
   let errorMessage = "";
 
   try {
-    parsedData = JSON.parse(body);
+    unChekedData = JSON.parse(body);
   } catch (error) {
-    res.writeHead(400, { "Content-Type": "text/plain" }).end("Invalid JSON");
-    req.connection.destroy();
+    return { parsedData, errorMessage: "Invalid JSON structure" };
   }
-  try {
-    for (let [key, value] of requireFields) {
-      const hasProprty = Object.prototype.hasOwnProperty.call(parsedData, key);
-      console.log(value);
-      const isCorrectType = requireTypeList[value](parsedData[key]);
-      if (!hasProprty || !isCorrectType) {
-        throw new Error(`Invalid field ${key}`);
-      }
+
+  for (let [key, value] of requireFields) {
+    const hasProprty = Object.prototype.hasOwnProperty.call(unChekedData, key);
+    const isCorrectType = requireTypeList[value](unChekedData[key]);
+    if (!hasProprty || !isCorrectType) {
+      return { parsedData, errorMessage: `Invalid field ${key}` };
     }
-  } catch (error) {
-    errorMessage = error.message;
+    parsedData[key] = unChekedData[key];
   }
 
   return { parsedData, errorMessage };

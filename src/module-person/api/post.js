@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { personUrlReqExp } from "../../variables.js";
 import { validatePost } from "../validators/post.js";
 
 const checkSize = (res, req, data) => {
@@ -18,6 +19,15 @@ const getPerson = (req, res, body) => {
 };
 
 export const post = (req, res, db) => {
+  const searcheResult = personUrlReqExp.exec(req.url);
+  const isCurrectPost = searcheResult[0] === "/person";
+
+  if (!isCurrectPost) {
+    return res
+      .writeHead(400, { "Content-Type": "text/plain" })
+      .end("Post availeble on url /person");
+  }
+
   const data = [];
   req
     .on("data", (chunk) => {

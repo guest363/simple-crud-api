@@ -1,4 +1,4 @@
-import { personUrlReqExp } from "../../variables.js";
+import { isUUID, personUrlReqExp } from "../../variables.js";
 
 export const get = (req, res, db) => {
   const searcheResult = personUrlReqExp.exec(req.url);
@@ -11,5 +11,20 @@ export const get = (req, res, db) => {
     ? JSON.stringify([...db.values()])
     : db.get(searcheResult[0]);
 
-  res.writeHead(200, { "Content-Type": "application/json" }).end(responsValue);
+  if (!isGetAll) {
+    if (!isUUID.test(searcheResult[0])) {
+      return res
+        .writeHead(400, { "Content-Type": "application/json" })
+        .end("Invalid uuid");
+    }
+    if (!responsValue) {
+      return res
+        .writeHead(404, { "Content-Type": "application/json" })
+        .end("User not found");
+    }
+  }
+
+  res
+    .writeHead(200, { "Content-Type": "application/json" })
+    .end(JSON.stringify(responsValue));
 };

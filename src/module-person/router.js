@@ -8,22 +8,21 @@ const personDb = dbSelector("in-memory");
 export const router = (req, res) => {
   switch (req.method) {
     case "GET":
-      return get( req, res, personDb );
+      return get(req, res, personDb);
     case "POST":
-      return post( req, res, personDb );
+      return post(req, res, personDb);
     case "PUT":
       break;
     case "DELETE":
       break;
 
     default:
-      res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(
+      res.writeHead(404, { "Content-Type": "application/json" }).end(
         JSON.stringify({
           data: `This method is not allow. ${http.STATUS_CODES[404]}`,
         })
       );
-
+      req.connection.destroy();
       break;
   }
 };

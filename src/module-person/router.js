@@ -1,4 +1,5 @@
 import http from "http";
+import { deleteWay } from "./api/delete.js";
 import { get } from "./api/get.js";
 import { post } from "./api/post.js";
 import { put } from "./api/put.js";
@@ -16,7 +17,7 @@ export const router = (req, res) => {
       case "PUT":
         return put(req, res, personDb);
       case "DELETE":
-        break;
+        return deleteWay(req, res, personDb);
 
       default:
         res

@@ -7,6 +7,7 @@
  * /person/ASSD/person/2swad                                false
  */
 export const personUrlReqExp = /^\/(person$)|((?<=^\/person\/)[\w-]+$)/;
-
+export const isUUIDInUrl =
+  /[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}/i;
 export const isUUID =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;

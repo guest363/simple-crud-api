@@ -1,8 +1,15 @@
-import { isUUID, personUrlReqExp } from "../../variables.js";
+import { isUUID, isUUIDInUrl, personUrlReqExp } from "../../variables.js";
 
 export const get = (req, res, db) => {
   const searcheResult = personUrlReqExp.exec(req.url);
   const isGetAll = searcheResult[0] === "/person";
+
+  if (!isUUIDInUrl.test(searcheResult[0])) {
+    return res
+      .writeHead(400, { "Content-Type": "text/plain" })
+      .end("Get availeble on url /person/UUID, but you send invalid UUID");
+  }
+
   /**
    * Либо возвращаем все знгачения Мапы
    * Либо берем по ID который будет в searcheResult[0]

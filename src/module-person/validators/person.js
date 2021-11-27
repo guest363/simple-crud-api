@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+import { isUUID } from "../../variables.js";
 /**
  * Как валидируются различные типы
  */
@@ -6,14 +8,17 @@ const requireTypeList = {
   2: (value) => typeof value === "number",
   3: (value) =>
     Array.isArray(value) && value.every((field) => typeof field === "string"),
+  4: (value) => isUUID.test(value),
 };
 /**
  * Поля и тип валидации
+ * key, value
  */
 const requireFields = [
   ["name", 1],
   ["age", 2],
   ["hobbies", 3],
+  ["id", 4],
 ];
 
 /**
@@ -34,25 +39,30 @@ const requireFields = [
  * @param {*} body JSON in string
  * @returns parsed Person object
  */
-export const validatePost = (req, res, body) => {
-  let parsedData = {};
+export const validatePerson = (body, id) => {
+  let person = {};
   let unChekedData = {};
   let errorMessage = "";
 
   try {
     unChekedData = JSON.parse(body);
   } catch (error) {
-    return { parsedData, errorMessage: "Invalid JSON structure" };
+    return { person, errorMessage: "Invalid JSON structure" };
   }
 
   for (let [key, value] of requireFields) {
     const hasProprty = Object.prototype.hasOwnProperty.call(unChekedData, key);
+    /** Задать ID для PUT взятый из URL */
+    if (!hasProprty && key === "id") {
+      person[key] = id || uuidv4();
+      continue;
+    }
     const isCorrectType = requireTypeList[value](unChekedData[key]);
     if (!hasProprty || !isCorrectType) {
-      return { parsedData, errorMessage: `Invalid field ${key}` };
+      return { person, errorMessage: `Invalid field ${key}` };
     }
-    parsedData[key] = unChekedData[key];
+    person[key] = unChekedData[key];
   }
 
-  return { parsedData, errorMessage };
+  return { person, errorMessage };
 };

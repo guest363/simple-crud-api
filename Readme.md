@@ -34,6 +34,20 @@ Bundling by webpack and run by node
 npm run start:prod
 ```
 
+## Testing
+
+Testing by cypress in gui mode
+
+```bash
+npm run cypress:open
+```
+
+Testing by cypress in cli mode
+
+```bash
+npm run cypress:run
+```
+
 # Communicate with app
 
 By default app listen 3000 port on your 127.0.0.1 address

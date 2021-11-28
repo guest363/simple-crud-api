@@ -10,7 +10,7 @@ it("Purge DB", function () {
 });
 
 
-it("Get all yousers empty", function () {
+it("Get all persons empty", function () {
   cy.request({
     url: "/person",
   })
@@ -20,7 +20,7 @@ it("Get all yousers empty", function () {
     });
 });
 
-it("Set wrong user", function () {
+it("Set wrong person", function () {
   cy.request({
     url: "/person",
     method: "POST",
@@ -33,7 +33,7 @@ it("Set wrong user", function () {
   });
 });
 
-it("Set current user", function () {
+it("Set current person", function () {
   cy.request({
     url: "/person",
     method: "POST",
@@ -52,7 +52,7 @@ it("Set current user", function () {
   });
 });
 
-it("Get all users and it's not empty", function () {
+it("Get all persons and it's not empty", function () {
   cy.request({
     url: "/person",
     method: "GET",

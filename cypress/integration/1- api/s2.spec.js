@@ -10,7 +10,7 @@ it("Purge DB", function () {
   });
 });
 
-it("Set current user", function () {
+it("Set current person", function () {
   cy.request({
     url: "/person",
     method: "POST",
@@ -29,7 +29,7 @@ it("Set current user", function () {
   });
 });
 
-it("Get all users", function () {
+it("Get all persons", function () {
   cy.request({
     url: "/person",
     method: "GET",
@@ -41,7 +41,7 @@ it("Get all users", function () {
   });
 });
 
-it("Delete user by incorrect id", function () {
+it("Delete person by incorrect id", function () {
   cy.request({
     url: `/person/${id}false`,
     method: "DELETE",
@@ -51,7 +51,7 @@ it("Delete user by incorrect id", function () {
   });
 });
 
-it("Delete user by correct id", function () {
+it("Delete person by correct id", function () {
   cy.request({
     url: `/person/${id}`,
     method: "DELETE",
@@ -61,7 +61,7 @@ it("Delete user by correct id", function () {
   });
 });
 
-it("Get all users", function () {
+it("Get all persons", function () {
   cy.request({
     url: "/person",
     method: "GET",

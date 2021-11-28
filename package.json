@@ -1,9 +1,11 @@
 {
   "devDependencies": {
+    "@bahmutov/cy-api": "^1.6.2",
     "cypress": "^9.1.0",
+    "cypress-cucumber-preprocessor": "^4.3.0",
     "eslint": "^8.3.0",
     "nodemon": "^2.0.15",
-    "webpack": "^5.64.2"
+    "webpack": "^5.64.4"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
@@ -11,7 +13,9 @@
   },
   "scripts": {
     "start:dev": "nodemon ./src/index.js",
-    "start:prod": "webpack --config ./config/webpack.prod.js && node ./build/bundle.js"
+    "start:prod": "webpack --config ./config/webpack.prod.js && node ./build/bundle.js",
+    "cypress:open": "sh ./node_modules/.bin/cypress open",
+    "cypress:run": "sh ./node_modules/.bin/cypress run"
   },
   "type": "module"
 }

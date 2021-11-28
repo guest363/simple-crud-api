@@ -2,6 +2,7 @@ import http from "http";
 import { deleteWay } from "./api/delete.js";
 import { get } from "./api/get.js";
 import { post } from "./api/post.js";
+import { purge } from "./api/purge.js";
 import { put } from "./api/put.js";
 import { dbSelector } from "./db/db-selector.js";
 
@@ -18,7 +19,8 @@ export const router = (req, res) => {
         return put(req, res, personDb);
       case "DELETE":
         return deleteWay(req, res, personDb);
-
+      case "PURGE":
+        return purge(req, res, personDb);
       default:
         res
           .writeHead(404, { "Content-Type": "text/plain" })
